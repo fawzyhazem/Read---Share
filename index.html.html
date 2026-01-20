@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read_&_Share</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <!-- Modal تسجيل الدخول والتسجيل -->
+    <div id="auth-modal" class="modal-overlay">
+        <div class="modal-content card">
+            <h1>📚 Read_&_Share </h1>
+            <p>سجل الدخول أو أنشئ حساب جديد للمشاركة</p>
+
+            <!-- أزرار التبديل بين الدخول والتسجيل -->
+            <div class="tabs">
+                <button id="show-login-btn" class="active">تسجيل الدخول</button>
+                <button id="show-register-btn">تسجيل جديد</button>
+            </div>
+
+            <!-- نموذج تسجيل الدخول -->
+            <form id="login-form" style="display: block;">
+                <label for="login-email">البريد الإلكتروني:</label>
+                <input type="email" id="login-email" class="animated-input" required>
+
+                <label for="login-password">كلمة المرور:</label>
+                <input type="password" id="login-password" class="animated-input" required>
+
+                <button type="submit" class="animated-button primary-button">دخول</button>
+            </form>
+
+            <!-- نموذج التسجيل -->
+            <form id="register-form" style="display: none;">
+                <label for="register-email">البريد الإلكتروني (حقيقي):</label>
+                <input type="email" id="register-email" class="animated-input" required>
+
+                <label for="register-password">كلمة المرور (جديدة للموقع):</label>
+                <input type="password" id="register-password" class="animated-input" required>
+
+                <button type="submit" class="animated-button primary-button">تسجيل</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- المحتوى الرئيسي (يظهر بعد تسجيل الدخول) -->
+    <div id="main-content" style="display: none;">
+        <header>
+            <h1>Read_&_Share</h1>
+            <h2>📚 منصة تبادل الكتب</h2>
+            <p>شارك كتبك واستفد من كتب الآخرين</p>
+            <button id="logout-btn" class="animated-button" style="margin-top: 10px;">تسجيل الخروج</button>
+        </header>
+
+        <main>
+            <!-- قسم البحث -->
+            <section id="search-section" class="card">
+                <h2>🔍 ابحث عن كتابك</h2>
+                <form id="search-form" class="search-container">
+                    <input type="text" id="search-input" placeholder="ابحث بالعنوان أو الوصف أو التصنيف..."
+                        class="animated-input">
+                    <button type="submit" id="search-button" class="animated-button">ابحث</button>
+                </form>
+            </section>
+
+            <!-- قسم إضافة كتاب -->
+            <section id="add-book-section" class="card">
+                <h2>➕ أضف كتابًا للمشاركة</h2>
+                <button id="add-book-btn" class="animated-button primary-button">أضف كتاب جديد</button>
+            </section>
+
+            <!-- قسم عرض الكتب -->
+            <section id="books-section" class="card">
+                <h2>📖 الكتب المتاحة</h2>
+                <div id="books-list">
+                    <!-- سيتم عرض الكتب هنا ديناميكيًا -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal إضافة كتاب -->
+    <div id="add-book-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content card">
+            <button class="close-btn close-button">×</button>
+            <h2>أضف كتابًا جديدًا</h2>
+            <form id="add-book-form">
+                <div class="form-group">
+                    <label for="book-title">عنوان الكتاب:</label>
+                    <input type="text" id="book-title" name="title" class="animated-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="book-description">الوصف:</label>
+                    <textarea id="book-description" name="description" rows="4" class="animated-input"
+                        required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="book-condition">حالة الكتاب:</label>
+                    <select id="book-condition" name="condition" class="animated-input" required>
+                        <option value="جديد">جديد</option>
+                        <option value="جيدة">جيدة</option>
+                        <option value="مستعملة">مستعملة</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="book-category">تصنيف الكتاب:</label>
+                    <input type="text" id="book-category" name="category" class="animated-input"
+                        placeholder="مثال: روايات، علوم، تاريخ..." required>
+                </div>
+
+                <div class="form-group">
+                    <label>نوع التبادل:</label>
+                    <div class="radio-group">
+                        <input type="radio" id="exchange-type-exchange" name="exchange_type" value="تبادل" checked>
+                        <label for="exchange-type-exchange">تبادل</label>
+                        
+                         <input type="radio" name="exchange_type" id="type-loan" value="بيع">
+                        <label for="type-loan">بيع</label>
+
+                        <input type="radio" id="exchange-type-donate" name="exchange_type" value="تبرع">
+                        <label for="exchange-type-donate">تبرع</label>
+                    </div>
+                </div>
+
+             <div id="price-container" style="display: none; margin-top: 15px;">
+                <label for="book-price">السعر (بالجنيه)</label>
+                <input type="number" id="book-price" class="animated-input" placeholder="اكتب السعر هنا...">
+             </div>
+
+                <div class="form-group">
+                    <label for="book-image">صورة الغلاف (اختياري):</label>
+                    <input type="file" id="book-image" name="image" accept="image/*" class="file-input">
+                </div>
+
+                <button type="submit" class="animated-button primary-button">أضف الكتاب</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal تفاصيل الكتاب -->
+    <div id="book-details-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content card details-card">
+            <button class="close-btn close-button">×</button>
+            <div id="book-details-content">
+                <!-- سيتم ملء التفاصيل هنا ديناميكيًا -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
